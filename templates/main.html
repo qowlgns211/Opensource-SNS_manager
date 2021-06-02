@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SNS-manager</title>
+    <link href="{{ url_for('static', filename='CSS/main.css') }}" rel="stylesheet">
+
+
+    <script>
+        var ys = true;
+        
+
+
+        function add_div_K(){
+            var divN = document.createElement('div');
+
+            div.innerHTML = document.getElementById().innerHTML;
+            document.getElementById('field').appendChild;
+        }
+
+        function add_div_N(){
+            if(ys){
+                var divN = document.createElement("div");
+                divN.innerHTML = `
+                    <div class="manage-top-bar">
+                <button class="manage-top-bar_btn" id="manage-top-bar_N">Send Mail</button>
+                </div>
+                <div>
+                <ul>
+                <li>test</li>
+                <li>test</li>
+                </ul>
+                </div>
+                
+                `;
+                document.getElementById('field').appendChild(divN);
+                ys = !ys;
+                
+            }
+            else{
+                var cell = document.getElementById('field');
+              cell.innerHTML = '';
+                ys = !ys;
+                
+            }
+          
+        }
+        function add_div_D(){
+            var div = document.createElement('div');
+
+            div.innerHTML = document.getElementById().innerHTML;
+            document.getElementById('field').appendChild;
+        }
+        function add_div_G(){
+            var div = document.createElement('div');
+
+            div.innerHTML = document.getElementById().innerHTML;
+            document.getElementById('field').appendChild;
+        }
+    </script>
+
+</head>
+<body>
+    <div class="top-bar">
+        <div id="top-bar_id">ID</div>
+    </div>
+
+    <div class="middle">
+        <div class="sns-tap">
+        <div class="sns" id="kakao">
+            <div class="btn-class">
+            <button type="button" class="btn" onclick="add_div_K()">
+                K
+              </button>
+                
+
+              </div>
+        </div>
+        <div class="sns" id="naver">
+            <div class="btn-class">
+            <button type="button" class="btn" onclick="add_div_N()">
+                N
+              </button>
+
+              </div>
+        </div>
+        <div class="sns" id="daum">
+            <div class="btn-class">
+            <button type="button" class="btn" onclick="add_div_D()">
+                D
+              </button>
+  
+              </div>
+        </div>
+        <div class="sns" id="gmail">
+            <div class="btn-class">
+            <button type="button" class="btn" onclick="add_div_G()">
+                G
+              </button>
+
+              </div>
+        </div>
+        </div>
+        <div class="sns-managing-tap">
+            <div id='field'>
+
+            </div>
+            
+        </div>
+    </div>
+    
+</body>
+</html>

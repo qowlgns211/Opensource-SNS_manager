@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <link href="{{ url_for('static', filename='CSS/index.css') }}" rel="stylesheet">
+  </head>
+
+  <body>
+    <form action="index.html" method="post" class="LoginForm">
+      <h2>Resister</h2>
+      <div class="emailForm">
+        <input type="email" class="email" placeholder="E-mail">
+    </div>
+      <div class="idForm">
+        <input type="text" class="id" placeholder="ID">
+      </div>
+      <div class="passForm">
+        <input type="password" class="pw" placeholder="PW">
+      </div>
+      <button type="button" class="btn" onclick="button()">
+        Resister
+      </button>
+      <script>
+      	let button = () => {
+        	alert('login Button !')
+        }
+      </script>
+    </form>
+  </body>
+</html>

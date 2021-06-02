@@ -1,0 +1,114 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    text-decoration: none;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  
+  }
+  
+  body {
+    
+    background-image: url('background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    position:relative;
+
+  }
+  .slide-in-fwd-center{-webkit-animation:slide-in-fwd-center .4s cubic-bezier(.25,.46,.45,.94) both;animation:slide-in-fwd-center .4s cubic-bezier(.25,.46,.45,.94) both}
+  
+ @-webkit-keyframes slide-in-fwd-center{0%{-webkit-transform:translateZ(-1400px);transform:translateZ(-1400px);opacity:0}100%{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1}}@keyframes slide-in-fwd-center{0%{-webkit-transform:translateZ(-1400px);transform:translateZ(-1400px);opacity:0}100%{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1}}
+  .loginForm {
+    position: absolute;
+    width:250px;
+    height:390px;
+    border-radius: 20px;
+    padding: 20px, 20px;
+    background-color:white;
+    text-align:center;
+    top:50%;
+    left: 50%;
+    margin:-195px 0 0 -125px;
+    
+    animation: slide-in-fwd-center 1.1s ease-in-out ;
+    
+  }
+  
+  .loginForm h2{
+    text-align: center;
+    margin: 30px;
+  }
+  
+  .idForm{
+    border: 2px solid #adadad;
+    margin: 30px;
+    padding: 10px 10px;
+  }
+  
+  .passForm{
+    border: 2px solid #adadad;
+    margin: 30px;
+    padding: 10px 10px;
+  }
+
+  .emailForm{
+    border: 2px solid #adadad;
+    margin: 30px;
+    padding: 10px 10px;
+  }
+  
+  .id {
+    width: 100%;
+    border:none;
+    outline:none;
+    color: #636e72;
+    font-size:16px;
+    height:25px;
+    background: none;
+  }
+  
+  .pw {
+    width: 100%;
+    border:none;
+    outline:none;
+    color: #636e72;
+    font-size:16px;
+    height:25px;
+    background: none;
+  }
+  
+  .email{
+    width: 100%;
+    border:none;
+    outline:none;
+    color: #636e72;
+    font-size:16px;
+    height:25px;
+    background: none;
+  }
+  .btn {
+    position:relative;
+    left:40%;
+    transform: translateX(-50%);
+    margin-bottom: 40px;
+    width:80%;
+    height:40px;
+    background: linear-gradient(125deg,#41eeee,#4831f5,#b037d4);
+    background-position: left;
+    background-size: 200%;
+    color:white;
+    font-weight: bold;
+    border:none;
+    cursor:pointer;
+    transition: 0.4s;
+    display:inline;
+  }
+  
+  .btn:hover {
+    background-position: right;
+  }
+  
+  .bottomText {
+    text-align: center;
+    
+  }
