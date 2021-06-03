@@ -9,7 +9,14 @@
 
 
     <script>
-        var ys = true;
+
+        function del_div(){
+            var cell = document.getElementById('field');
+                cell.innerHTML = '  <div id="main-text" style="background-color: #e9eaee; text-align: center; font-size: 30px; font-weight: bold; color: gray;">SNS Manager</div>';
+            
+        }
+       
+      
         
 
 
@@ -21,43 +28,114 @@
         }
 
         function add_div_N(){
-            if(ys){
-                var divN = document.createElement("div");
-                divN.innerHTML = `
+         
+                var cell = document.getElementById('field');
+                cell.innerHTML = '';
+                var div = document.createElement("div");
+
+                div.innerHTML = `
+                <div id="divN">
                     <div class="manage-top-bar">
-                <button class="manage-top-bar_btn" id="manage-top-bar_N">Send Mail</button>
+                        <button class="manage-top-bar_btn" id="manage-top-bar_N" onclick='del_div()'>X</button>
+                        <button class="manage-top-bar_btn" id="manage-top-bar_N">Send Mail</button>
+                        <button class="manage-top-bar_btn" id="manage-top-bar_N" onclick = "window.open('http://naver.com')">Naver Link</button>
+                        <div id="user-name">ID</div>
+                    </div>
+                    <div class="manage-middle-bar">
+                        <div class="mail-list">
+                            <ul>
+                                <li>test</li>
+                                <li>test</li>
+                                <li>test</li>
+                                <li>test</li>
+                                <li>test</li>
+                                <li>test</li>
+                                <li>test</li>
+                                <li>test</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                <ul>
-                <li>test</li>
-                <li>test</li>
-                </ul>
-                </div>
+                
                 
                 `;
-                document.getElementById('field').appendChild(divN);
-                ys = !ys;
+                document.getElementById('field').appendChild(div);
+              
                 
-            }
-            else{
-                var cell = document.getElementById('field');
-              cell.innerHTML = '';
-                ys = !ys;
-                
-            }
+
           
         }
         function add_div_D(){
-            var div = document.createElement('div');
+            var cell = document.getElementById('field');
+              cell.innerHTML = '';
+                var div = document.createElement("div");
 
-            div.innerHTML = document.getElementById().innerHTML;
-            document.getElementById('field').appendChild;
+                div.innerHTML = `
+                <div id="divD">
+                        <div class="manage-top-bar">
+                            <button class="manage-top-bar_btn" id="manage-top-bar_D" onclick='del_div()'>X</button>
+                            <button class="manage-top-bar_btn" id="manage-top-bar_D">Send Mail</button>
+                            <button class="manage-top-bar_btn" id="manage-top-bar_D" onclick = "window.open('http://daum.com')">Daum Link</button>
+                            <div id="user-name">ID</div>
+                        </div>
+                    <div class="manage-middle-bar">
+                        <div class="mail-list">
+                            <ul>
+                                <li>test</li>
+                                <li>test</li>
+                                <li>test</li>
+                                <li>test</li>
+                                <li>test</li>
+                                <li>test</li>
+                                <li>test</li>
+                                <li>test</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                `;
+                document.getElementById('field').appendChild(div);
+
+               
+                
+          
+
         }
         function add_div_G(){
-            var div = document.createElement('div');
+    
+                var cell = document.getElementById('field');
+              cell.innerHTML = '';
+                var div = document.createElement("div");
 
-            div.innerHTML = document.getElementById().innerHTML;
-            document.getElementById('field').appendChild;
+                div.innerHTML = `
+                <div id="divG">
+                        <div class="manage-top-bar">
+                            <button class="manage-top-bar_btn" id="manage-top-bar_G" onclick='del_div()'>X</button>
+                            <button class="manage-top-bar_btn" id="manage-top-bar_G">Send Mail</button>
+                            <button class="manage-top-bar_btn" id="manage-top-bar_G" onclick = "window.open('https://www.google.com/intl/ko/gmail/about/')">Gaum Link</button>
+                            <div id="user-name">ID</div>
+                        </div>
+                    <div class="manage-middle-bar">
+                        <div class="mail-list">
+                            <ul>
+                                <li>test</li>
+                                <li>test</li>
+                                <li>test</li>
+                                <li>test</li>
+                                <li>test</li>
+                                <li>test</li>
+                                <li>test</li>
+                                <li>test</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                `;
+                document.getElementById('field').appendChild(div);
         }
     </script>
 
@@ -104,8 +182,9 @@
         </div>
         </div>
         <div class="sns-managing-tap">
+            
             <div id='field'>
-
+                <div id="main-text" style="background-color: #e9eaee; text-align:center; font-size: 30px; font-weight: bold; color: gray;">SNS Manager</div>
             </div>
             
         </div>

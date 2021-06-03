@@ -4,24 +4,29 @@
   </head>
 
   <body>
-    <form action="index.html" method="post" class="LoginForm">
-      <h2>Login</h2>
+    <form action="/info" method="post" class="LoginForm">
+
+      <h2>SNS-manager</h2>
+
+
       <div class="idForm">
         <input type="text" class="id" placeholder="ID">
       </div>
+
+
       <div class="passForm">
         <input type="password" class="pw" placeholder="PW">
       </div>
-      <button type="button" class="btn" onclick="button()">
+
+      
+      <button type="submit" class="btn">
         LOG IN
       </button>
-      <script>
-      	let button = () => {
-        	alert('login Button !')
-        }
-      </script>
+
+
+
       <div class="bottomText">
-        Don't you have ID? <a href="register.html">sign up</a>
+        Don't you have ID? <a href="{{ url_for('register')}}">sign up</a>
       </div>
     </form>
   </body>
