@@ -1,21 +1,42 @@
+
 from logging import debug
 import os
 from flask import Flask, render_template
 from flask import request
 from flask import redirect
+from sqlalchemy.sql.elements import Null
 from models import db
 from models import Fcuser
+from flask import session
+
 
 app = Flask(__name__)
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html')
+    if request.method == 'GET':
+        return render_template('index.html')
+    else:
+        userid = request.form['userid']
+        password = request.form.get('password')
+
+        fcuser = Fcuser.query.filter_by(userid=userid).first()
+        if fcuser is not None:
+            if fcuser.password == password:
+                session['userid'] = userid
+                return render_template('main.html', id=userid)
+            else:
+                a = "wrong"
+                return render_template('index.html', answer=a)
+        else:
+            a = "wrong"
+            return render_template('index.html', answer=a)
 
 
 @app.route('/info', methods=['GET', 'POST'])
 def info():
+
     return render_template('main.html')
 
 
@@ -52,6 +73,9 @@ if __name__ == "__main__":
     app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+    app.secret_key = 'super secret key'
+    app.config['SESSION_TYPE'] = 'filesystem'
 
     db.init_app(app)
     db.app = app

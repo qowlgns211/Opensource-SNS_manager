@@ -2,20 +2,27 @@
   <head>
     <link href="{{ url_for('static', filename='CSS/index.css') }}" rel="stylesheet">
   </head>
+  <script>
+      var a = `{{answer}}`;
+        window.onload = function(){
+          if (a=='wrong'){
+              return alert('ID 또는 비밀번호가 틀렸습니다.');
+          }
+      }
+  </script>
 
   <body>
-    <form action="/info" method="post" class="LoginForm">
+    <form method="POST" id="LoginForm" class="LoginForm" name="LoginForm">
 
       <h2>SNS-manager</h2>
 
 
       <div class="idForm">
-        <input type="text" class="id" placeholder="ID">
+        <input type="text" class="id" id="userid" placeholder="ID" name="userid" required>
       </div>
 
-
       <div class="passForm">
-        <input type="password" class="pw" placeholder="PW">
+        <input type="password" class="pw" id="password" placeholder="PW" name="password" required>
       </div>
 
       
