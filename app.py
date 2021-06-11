@@ -4,9 +4,13 @@ import os
 from flask import Flask, render_template
 from flask import request
 from flask import redirect
+from flask.helpers import url_for
 from sqlalchemy.sql.elements import Null
 from models import db
 from models import Fcuser
+from models import NContents
+from models import DContents
+from models import GContents
 from flask import session
 
 
@@ -16,6 +20,9 @@ app = Flask(__name__)
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'GET':
+        if 'userid' in session:
+            userid = session['userid']
+            return redirect(url_for('info'))
         return render_template('index.html')
     else:
         userid = request.form['userid']
@@ -25,7 +32,19 @@ def index():
         if fcuser is not None:
             if fcuser.password == password:
                 session['userid'] = userid
-                return render_template('main.html', id=userid)
+                session['Nid'] = '미연동'
+                session['Did'] = '미연동'
+                session['Gid'] = '미연동'
+                ncontents = NContents.query.filter_by(userid=userid).first()
+                if ncontents is not None:
+                    session['Nid'] = ncontents.Nid
+                dcontents = DContents.query.filter_by(userid=userid).first()
+                if dcontents is not None:
+                    session['Did'] = dcontents.Did
+                gcontents = GContents.query.filter_by(userid=userid).first()
+                if gcontents is not None:
+                    session['Gid'] = gcontents.Gid
+                return render_template('main.html', userid=session['userid'], Nid=session['Nid'], Did=session['Did'], Gid=session['Gid'])
             else:
                 a = "wrong"
                 return render_template('index.html', answer=a)
@@ -34,10 +53,16 @@ def index():
             return render_template('index.html', answer=a)
 
 
+@app.route('/logout')
+def logout():
+    session.pop('userid', None)
+    return redirect(url_for('index'))
+
+
 @app.route('/info', methods=['GET', 'POST'])
 def info():
-
-    return render_template('main.html')
+    if 'userid' in session:
+        return render_template('main.html', userid=session['userid'], Nid=session['Nid'], Did=session['Did'], Gid=session['Gid'])
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -60,6 +85,43 @@ def register():
         return redirect('/')
 
 
+@app.route('/Idinter', methods=['GET', 'POST'])
+def Idinter():
+    if request.method == 'GET':
+        return render_template('Idinter.html', userid=session['userid'])
+    else:
+        usermailid = request.form.get('userid')
+        usermailpw = request.form.get('password')
+        usermailtype = request.form.get('type')
+        if (usermailtype == 'Naver'):
+            ncontents = NContents()
+            ncontents.userid = session['userid']
+            ncontents.Nid = usermailid
+            session['Nid'] = usermailid
+            ncontents.Npw = usermailpw
+            db.session.add(ncontents)
+            db.session.commit()
+            return render_template('main.html', userid=session['userid'], Nid=session['Nid'], Did=session['Did'], Gid=session['Gid'])
+        elif (usermailtype == 'Daum'):
+            dcontents = DContents()
+            dcontents.userid = session['userid']
+            dcontents.Did = usermailid
+            session['Did'] = usermailid
+            dcontents.Dpw = usermailpw
+            db.session.add(dcontents)
+            db.session.commit()
+            return render_template('main.html', userid=session['userid'], Nid=session['Nid'], Did=session['Did'], Gid=session['Gid'])
+        elif (usermailtype == 'Google'):
+            gcontents = GContents()
+            gcontents.userid = session['userid']
+            gcontents.Gid = usermailid
+            session['Gid'] = usermailid
+            gcontents.Gpw = usermailpw
+            db.session.add(gcontents)
+            db.session.commit()
+            return render_template('main.html', userid=session['userid'], Gid=session['Gid'])
+
+
 @app.route('/main')
 def main():
     return render_template('main.html')
@@ -79,6 +141,6 @@ if __name__ == "__main__":
 
     db.init_app(app)
     db.app = app
-    db.create_all()   #
+    db.create_all()
 
     app.run(debug=True)

@@ -1,0 +1,158 @@
+<html>
+  <head>
+    
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <title>SNS-manager</title>
+    <link href="{{ url_for('static', filename='CSS/Idinter.css') }}" rel="stylesheet">
+
+
+    <script>
+
+
+
+
+         function add_interform_k(){      
+            var cell = document.getElementById('interform');
+            cell.innerHTML = '';
+            var div = document.createElement("div");
+
+div.innerHTML = `
+<form method="POST" id="LoginForm" class="LoginForm" name="LoginForm" style="height: 530px;">
+      <h2>연동</h2>
+     
+      <div class="idForm">
+        <input type="text" class="id" id="userid" placeholder="ID" name="userid" required>
+      </div>
+      <div class="passForm">
+        <input type="password" class="pw" id="password" placeholder="PW" name="password" required>
+      <div class="passForm">
+        <input type="text" class="pw" id="type" value="KaKao" name="type" readonly/>
+        </div>
+
+      <button class="btn_inter" type="submit">
+        연동하기
+      </button>
+
+
+`;
+document.getElementById('interform').appendChild(div);
+}
+
+function add_interform_n(){      
+            var cell = document.getElementById('interform');
+            cell.innerHTML = '';
+            var div = document.createElement("div");
+
+div.innerHTML = `
+<form method="POST" id="LoginForm" class="LoginForm" name="LoginForm" style="height: 530px;">
+      <h2>연동</h2>
+     
+      <div class="idForm">
+        <input type="text" class="id" id="userid" placeholder="ID" name="userid" required>
+      </div>
+      <div class="passForm">
+        <input type="password" class="pw" id="password" placeholder="PW" name="password" required>
+      <div class="passForm">
+        <input type="text" class="pw" id="type" value="Naver" name="type" readonly/>
+        </div>
+
+      <button class="btn_inter" type="submit">
+        연동하기
+      </button>
+
+
+
+`;
+document.getElementById('interform').appendChild(div);
+}
+
+function add_interform_d(){      
+            var cell = document.getElementById('interform');
+            cell.innerHTML = '';
+            var div = document.createElement("div");
+
+div.innerHTML = `
+<form method="POST" id="LoginForm" class="LoginForm" name="LoginForm" style="height: 530px;">
+      <h2>연동</h2>
+     
+      <div class="idForm">
+        <input type="text" class="id" id="userid" placeholder="ID" name="userid" required>
+      </div>
+      <div class="passForm">
+        <input type="password" class="pw" id="password" placeholder="PW" name="password" required>
+      <div class="passForm">
+        <input type="text" class="pw" id="type" value="Daum" name="type" readonly/>
+        </div>
+
+      <button class="btn_inter" type="submit">
+        연동하기
+      </button>
+
+
+
+`;
+document.getElementById('interform').appendChild(div);
+}
+
+function add_interform_g(){      
+            var cell = document.getElementById('interform');
+            cell.innerHTML = '';
+            var div = document.createElement("div");
+
+div.innerHTML = `
+<form method="POST" id="LoginForm" class="LoginForm" name="LoginForm" style="height: 530px;">
+      <h2>연동</h2>
+     
+      <div class="idForm">
+        <input type="text" class="id" id="userid" placeholder="ID" name="userid" required>
+      </div>
+      <div class="passForm">
+        <input type="password" class="pw" id="password" placeholder="PW" name="password" required>
+      <div class="passForm">
+        <input type="text" class="pw" id="type" values="Google" name="type" readonly/>
+        </div>
+
+      <button class="btn_inter" type="submit">
+        연동하기
+      </button>
+
+
+
+`;
+document.getElementById('interform').appendChild(div);
+}
+    </script>
+
+</head>
+
+  <body>
+    <div class="top-bar">
+        <div id="top-bar_id">{{userid}}</div>
+    
+        
+
+    </div>
+
+    <div class="middle">
+        <button type="button" class="btn" id="k" onclick="add_interform_k()">
+            카카오 연동
+          </button>
+        <button type="button" class="btn" id="n" onclick="add_interform_n()">
+            네이버 연동
+          </button>
+          <button type="button" class="btn" id="d" onclick="add_interform_d()">
+            다음 연동
+          </button>
+          <button type="button" class="btn" id="g" onclick="add_interform_g()">
+            구글 연동
+          </button>
+
+    </div>
+    <div id="interform">
+
+    </div>
+    
+  </body>
+</html>

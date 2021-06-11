@@ -7,8 +7,9 @@
     <title>SNS-manager</title>
     <link href="{{ url_for('static', filename='CSS/main.css') }}" rel="stylesheet">
 
+    <script> 
 
-    <script>
+    
 
         function del_div(){
             var cell = document.getElementById('field');
@@ -28,35 +29,50 @@
         }
 
         function add_div_N(){
+
+            
+
+
          
                 var cell = document.getElementById('field');
                 cell.innerHTML = '';
                 var div = document.createElement("div");
 
                 div.innerHTML = `
-                <div id="divN">
-                    <div class="manage-top-bar">
-                        <button class="manage-top-bar_btn" id="manage-top-bar_N" onclick='del_div()'>X</button>
-                        <button class="manage-top-bar_btn" id="manage-top-bar_N">Send Mail</button>
-                        <button class="manage-top-bar_btn" id="manage-top-bar_N" onclick = "window.open('http://naver.com')">Naver Link</button>
-                        <div id="user-name">{{id}}</div>
-                    </div>
-                    <div class="manage-middle-bar">
-                        <div class="mail-list">
-                            <ul>
-                                <li>test</li>
-                                <li>test</li>
-                                <li>test</li>
-                                <li>test</li>
-                                <li>test</li>
-                                <li>test</li>
-                                <li>test</li>
-                                <li>test</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                
+
+    <div id="divN">
+        <div class="manage-top-bar">
+            <button class="manage-top-bar_btn" id="manage-top-bar_N" onclick='del_div()'>X</button>
+            
+            <button class="manage-top-bar_btn" id="manage-top-bar_N" onclick = "window.open('https://www.google.com/intl/ko/gmail/about/')">Naver Link</button>
+            <div id="user-name">사용자: {{userid}}</div>
+            <div id="user-name">네이버 아이디: {{Nid}}</div>
+        </div>
+    <div class="manage-middle-bar">
+        <div class="mail-list">
+            <ul>
+                <li>test</li>
+                <li>test</li>
+                <li>test</li>
+                <li>test</li>
+                <li>test</li>
+                <li>test</li>
+                <li>test</li>
+                <li>test</li>
+            </ul>
+        </div>
+        <div class="look-and-send-mail">
+            <div class="mail-contents" id="N-mail-contents"></div>
+            <textarea id="reply-contents" name="reply-contents"
+                 rows="5" cols="100">
+            </textarea>
+            <button class="manage-top-bar_btn" id="manage-top-bar_N">Send Mail</button>
+            
+
+        </div>
+    </div>
+</div>
+    
                 
                 `;
                 document.getElementById('field').appendChild(div);
@@ -65,35 +81,47 @@
 
           
         }
-        function add_div_D(){
+        function add_div_D(id){
             var cell = document.getElementById('field');
               cell.innerHTML = '';
                 var div = document.createElement("div");
 
                 div.innerHTML = `
-                <div id="divD">
-                        <div class="manage-top-bar">
-                            <button class="manage-top-bar_btn" id="manage-top-bar_D" onclick='del_div()'>X</button>
-                            <button class="manage-top-bar_btn" id="manage-top-bar_D">Send Mail</button>
-                            <button class="manage-top-bar_btn" id="manage-top-bar_D" onclick = "window.open('http://daum.com')">Daum Link</button>
-                            <div id="user-name">{{id}}</div>
-                        </div>
-                    <div class="manage-middle-bar">
-                        <div class="mail-list">
-                            <ul>
-                                <li>test</li>
-                                <li>test</li>
-                                <li>test</li>
-                                <li>test</li>
-                                <li>test</li>
-                                <li>test</li>
-                                <li>test</li>
-                                <li>test</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                
+
+    <div id="divD">
+        <div class="manage-top-bar">
+            <button class="manage-top-bar_btn" id="manage-top-bar_D" onclick='del_div()'>X</button>
+            
+            <button class="manage-top-bar_btn" id="manage-top-bar_D" onclick = "window.open('https://www.google.com/intl/ko/gmail/about/')">Daum Link</button>
+            <div id="user-name">사용자: {{userid}}</div>
+            <div id="user-name">다음 아이디: {{Did}}</div>
+        </div>
+    <div class="manage-middle-bar">
+        <div class="mail-list">
+            <ul>
+                <li>test</li>
+                <li>test</li>
+                <li>test</li>
+                <li>test</li>
+                <li>test</li>
+                <li>test</li>
+                <li>test</li>
+                <li>test</li>
+            </ul>
+        </div>
+        <div class="look-and-send-mail">
+            <div class="mail-contents" id="D-mail-contents"></div>
+            <textarea id="reply-contents" name="reply-contents"
+                 rows="5" cols="100">
+            </textarea>
+            <button class="manage-top-bar_btn" id="manage-top-bar_D">Send Mail</button>
+            
+
+        </div>
+    </div>
+</div>
+    
+
                 
                 `;
                 document.getElementById('field').appendChild(div);
@@ -103,46 +131,66 @@
           
 
         }
-        function add_div_G(){
+        function add_div_G(id){
     
                 var cell = document.getElementById('field');
               cell.innerHTML = '';
                 var div = document.createElement("div");
 
                 div.innerHTML = `
-                <div id="divG">
-                        <div class="manage-top-bar">
-                            <button class="manage-top-bar_btn" id="manage-top-bar_G" onclick='del_div()'>X</button>
-                            <button class="manage-top-bar_btn" id="manage-top-bar_G">Send Mail</button>
-                            <button class="manage-top-bar_btn" id="manage-top-bar_G" onclick = "window.open('https://www.google.com/intl/ko/gmail/about/')">Gaum Link</button>
-                            <div id="user-name">{{id}}</div>
-                        </div>
-                    <div class="manage-middle-bar">
-                        <div class="mail-list">
-                            <ul>
-                                <li>test</li>
-                                <li>test</li>
-                                <li>test</li>
-                                <li>test</li>
-                                <li>test</li>
-                                <li>test</li>
-                                <li>test</li>
-                                <li>test</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                
+
+    <div id="divG">
+        <div class="manage-top-bar">
+            <button class="manage-top-bar_btn" id="manage-top-bar_G" onclick='del_div()'>X</button>
+            
+            <button class="manage-top-bar_btn" id="manage-top-bar_G" onclick = "window.open('https://www.google.com/intl/ko/gmail/about/')">google Link</button>
+            <div id="user-name">사용자: {{userid}}</div>
+            <div id="user-name">구글 아이디: {{Gid}}</div>
+        </div>
+    <div class="manage-middle-bar">
+        <div class="mail-list">
+            <ul>
+                <li>test</li>
+                <li>test</li>
+                <li>test</li>
+                <li>test</li>
+                <li>test</li>
+                <li>test</li>
+                <li>test</li>
+                <li>test</li>
+            </ul>
+        </div>
+        <div class="look-and-send-mail">
+            <div class="mail-contents" id="G-mail-contents"></div>
+            <textarea id="reply-contents" name="reply-contents"
+                 rows="5" cols="100">
+            </textarea>
+            <button class="manage-top-bar_btn" id="manage-top-bar_G">Send Mail</button>
+            
+
+        </div>
+    </div>
+</div>
+    
+
                 
                 `;
                 document.getElementById('field').appendChild(div);
         }
+
+
+    
     </script>
+
 
 </head>
 <body>
     <div class="top-bar">
-        <div id="top-bar_id">{{id}}</div>
+        <div id="top-bar_id">{{userid}}</div>
+        <a href="{{ url_for('Idinter')}}" id="top-bar_id" >이메일-연동하기</a>
+        <a href="{{ url_for('logout')}}" id="top-bar_id" >로그아웃</a>
+        
+
     </div>
 
     <div class="middle">
@@ -185,6 +233,7 @@
             
             <div id='field'>
                 <div id="main-text" style="background-color: #e9eaee; text-align:center; font-size: 30px; font-weight: bold; color: gray;">SNS Manager</div>
+                
             </div>
             
         </div>

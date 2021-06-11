@@ -56,7 +56,7 @@ body{
     
     
     display: flex;
-    justify-content: center;
+    justify-content:space-around;
     
 }
 
@@ -64,6 +64,11 @@ body{
     font-size:25px;
     color:white;
     font-weight: bold;
+}
+
+a#top-bar_id{
+    
+    margin-left: 10px;
 }
 
 .middle{
@@ -111,6 +116,7 @@ body{
     color: white;
     font-weight: bold;
     padding: 5px;
+    
     width: 100%;
     border:none;
     cursor:pointer;
@@ -192,12 +198,14 @@ body{
 
 .manage-middle-bar{
     height: 540px;
+    display: flex;
 }
 
 .mail-list{
     position: relative;
     left: 20px;
     top:10px;
+    width: 650px;
     
 
 }
@@ -231,4 +239,42 @@ li{
       display: inline-block;
       vertical-align: middle;
       padding: 0px 5px 6px 0px;
+  }
+
+
+  .look-and-send-mail{
+      margin: 5px;
+      padding: 20px;
+  }
+
+  .mail-contents{
+      border-radius: 5px;
+      height: 170px;
+      width: 650px;
+      padding: 5px;
+      margin: 5px;
+      
+  }
+
+
+
+  textarea{
+    padding: 5px;
+    margin: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 1px #999;
+    width: 650px;
+  }
+
+  #G-mail-contents{
+    background-color:mistyrose;
+  }
+
+  #D-mail-contents{
+    background-color:lightblue;
+  }
+
+  #N-mail-contents{
+    background-color:lightgreen;
   }
