@@ -1,24 +1,30 @@
 #-*- coding: utf-8 -*-
 #!/usr/bin/python3
 
-import stmpib
-from email.message import EmailMessage
+import stmpib, os
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+import sys
 
-email_form = "tlsthr3392@gmail.com"
-email_to = "tlsthr3392@gmail.com"
-email_subject = "제목을 위한 코드입니다."
-email_content = "내용을 위한 코드입니다."
-
-msg = EmailMessage()
-msg.set_content(email_content)
-msg['From'] = email_from
-msg['To'] = email_to
-msg['Subject'] = email_subject
+id = sys.arv[1]
+password = sys.arv[2]
+sendEmail = sys.arv[3]
+subject= sys.arv[4]
+text = sys.argv[5]
+addrs = [sys.argv[6]]
 
 smtp = smtplib.SMTP('smtp.gmail.com',587)
-smtp = starttls()
+smtp.ehlo()
+smtp.starttls()
+smtp.login(id,password)
 
-smtp.login('tlsthr3392@gmail.com',gmail비밀번호)
-smtp.send_message(msg)
+message = MIMEMultipart()
+message.attach(MIMEText(text))
+
+for addr in addrs:
+  message['From'] = sendEmail
+  message['TO'] = addr
+  message['Subject'] = subject
+  smtp.sendmail(sendEmail,addr,message.as_string())
 
 smtp.quit()
