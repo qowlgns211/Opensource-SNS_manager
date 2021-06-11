@@ -7,6 +7,17 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 from bs4 import BeautifulSoup
 
+def Daum(id_inpuut,pwd_input):
+    driver = webdriver.Chrome('C:\Chrome_WebDriver\chromedriver.exe')
+    driver.get('https://logins.daum.net/accounts/signinfrom.do')
+
+    sleep(0.5)
+    driver.find_element_by_name('id').send_keys('id_input')
+    sleep(0.5)
+    driver.find_element_by_name('pw').send_keys('pwd_input')
+    sleep(0.5)
+
+    driver.find_element_by_xpath('//*[@id="loginBtn"]').click()
 
 def Naver(id_input, pwd_input):
     driver = webdriver.Chrome('C:\Chrome_WebDriver\chromedriver.exe')
@@ -31,8 +42,10 @@ def Crawl():
 
     title_list = soup.find_all('strong','mail.title')
     send_people = soup.find_all('a','title')
-
+    mail_address = soup.find_all('a','href
     
+    
+    # 크롤링 정보 확인용 print
     for title in title_list:
         print(title.text)
     
