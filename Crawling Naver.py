@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup
 
 def Daum(id_inpuut,pwd_input):
     driver = webdriver.Chrome('C:\Chrome_WebDriver\chromedriver.exe')
-    driver.get('https://logins.daum.net/accounts/signinfrom.do')
+    driver.get('https://logins.daum.net/accounts/signinform.do?url=https%3A%2F%2Fwww.daum.net%2F')
 
     sleep(0.5)
     driver.find_element_by_name('id').send_keys('id_input')
@@ -18,6 +18,8 @@ def Daum(id_inpuut,pwd_input):
     sleep(0.5)
 
     driver.find_element_by_xpath('//*[@id="loginBtn"]').click()
+
+    driver.
 
 def Naver(id_input, pwd_input):
     driver = webdriver.Chrome('C:\Chrome_WebDriver\chromedriver.exe')
@@ -42,7 +44,7 @@ def Crawl():
 
     title_list = soup.find_all('strong','mail.title')
     send_people = soup.find_all('a','title')
-    mail_address = soup.find_all('a','href
+    mail_address = soup.find_all('a','href')
     
     
     # 크롤링 정보 확인용 print
