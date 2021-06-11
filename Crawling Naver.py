@@ -23,7 +23,7 @@ driver.get('https://nid.naver.com/nidlogin.login?mode=form&url=https%3A%2F%2Fwww
 sleep(0.5)
 driver.find_element_by_name("id").send_keys('dkstjsdn1224')
 sleep(0.5) 
-driver.find_element_by_name('pw').send_keys('fellin1919')
+driver.find_element_by_name('pw').send_keys('pwd')
 sleep(0.5)
 #아이디와 비밀번호를 자동으로 타이핑하는 코드
 
