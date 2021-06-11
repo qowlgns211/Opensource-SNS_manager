@@ -1,38 +1,45 @@
-#/usr/bin/python3
-#-*- coding = utf-8 -*-
-
-import pyperclip
-import requests
-from flask import Flask render_template
+from flask import Flask
+from flask import render_template
+from flask import request
+from time import sleep
+from selenium import webdriver
 from bs4 import BeautifulSoup
-from selenium.webdriver import Chrome
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.action\_chains import ActionChains
-import time
 
-def copy\_paste(driver, element, text):
-  pyperclip.copy(text)
-  element.click()
-  
-  #ActionChains : 명령어들을 모으는 역할이다.
-  #ActionChains.perform() : 모인 명령어를 chain 으로 묶인 순서대로 진행한다.
-  
-  action\_chain = ActionChains(driver).key\_down(Keys.CONTROL).send\_keys('v').key\_up(Keys.CONTROL)
-  action\_chain.perform()
-  time.sleep(1)
-  
-if __name__ == '__main__':
-  naver_login_url = 'https://nid.naver.com/nidlogin/login'
-  id = ' ' # 정보 받아오는 부분 (구현 예정) 
-  pwd = '  ' #정보 받아오는 부분  ( 구현 예정)
-  
-  # flask 로 login 정보 password 정보 받아오기.
-  
-  driver = Chrome()
-  driver.get(naver_login_url)
-  id_input = driver.find_element_by_id('id')
-  pwd_input = driver.find_element_by_id('pw')
-  btn = driver.find_element_by_css_selector('input[type=submit]')
-  
-  copy\_paste(driver, id\_input, id)
-  copy\_paste(driver, pwd\_input,pwd)
+#app = Flask(__name__)
+
+#@app.route('\',methods = ['GET'])
+#def index():
+#    return render_template('home.html') # 정보 입력받는 란.
+
+#@app.route('\information',methos = ['POST'])
+#def info():
+#    id = input(requests.form['id'])
+#    pwd = input(request.form['pwd'])
+
+driver = webdriver.Chrome('C:\Chrome_WebDriver\chromedriver.exe')
+driver.get('https://nid.naver.com/nidlogin.login?mode=form&url=https%3A%2F%2Fwww.naver.com')
+
+# sleep 을 받는 이유는 너무 빠르게 로그인을 해버리면 트래픽공격으로 오해를 받을 수 있다.
+sleep(0.5)
+driver.find_element_by_name("id").send_keys('dkstjsdn1224')
+sleep(0.5) 
+driver.find_element_by_name('pw').send_keys('fellin1919')
+sleep(0.5)
+#아이디와 비밀번호를 자동으로 타이핑하는 코드
+
+
+driver.find_element_by_xpath('//*[@id="log.login"]').click()
+#자동으로 로그인 버튼을 눌러주는 코드
+
+driver.get("https://mail.naver.com/")
+html = driver.page_source
+soup = BeautifulSoup(html,'lxml')
+
+title_list = soup.find_all('strong','mail.title')
+send_people = soup.find_all('a','title')
+
+for people in send_people:
+    print(people.text)
+
+for title in title_list:
+    print(title.text)
