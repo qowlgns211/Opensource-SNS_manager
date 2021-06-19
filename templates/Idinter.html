@@ -13,32 +13,32 @@
 
 
 
-         function add_interform_k(){      
-            var cell = document.getElementById('interform');
-            cell.innerHTML = '';
-            var div = document.createElement("div");
+//          function add_interform_k(){      
+//             var cell = document.getElementById('interform');
+//             cell.innerHTML = '';
+//             var div = document.createElement("div");
 
-div.innerHTML = `
-<form method="POST" id="LoginForm" class="LoginForm" name="LoginForm" style="height: 530px;">
-      <h2>연동</h2>
+// div.innerHTML = `
+// <form method="POST" id="LoginForm" class="LoginForm" name="LoginForm" style="height: 530px;">
+//       <h2>연동</h2>
      
-      <div class="idForm">
-        <input type="text" class="id" id="userid" placeholder="ID" name="userid" required>
-      </div>
-      <div class="passForm">
-        <input type="password" class="pw" id="password" placeholder="PW" name="password" required>
-      <div class="passForm">
-        <input type="text" class="pw" id="type" value="KaKao" name="type" readonly/>
-        </div>
+//       <div class="idForm">
+//         <input type="text" class="id" id="userid" placeholder="ID" name="userid" required>
+//       </div>
+//       <div class="passForm">
+//         <input type="password" class="pw" id="password" placeholder="PW" name="password" required>
+//       <div class="passForm">
+//         <input type="text" class="pw" id="type" value="KaKao" name="type" readonly/>
+//         </div>
 
-      <button class="btn_inter" type="submit">
-        연동하기
-      </button>
+//       <button class="btn_inter" type="submit">
+//         연동하기
+//       </button>
 
 
-`;
-document.getElementById('interform').appendChild(div);
-}
+// `;
+// document.getElementById('interform').appendChild(div);
+// }
 
 function add_interform_n(){      
             var cell = document.getElementById('interform');
@@ -111,7 +111,7 @@ div.innerHTML = `
       <div class="passForm">
         <input type="password" class="pw" id="password" placeholder="PW" name="password" required>
       <div class="passForm">
-        <input type="text" class="pw" id="type" values="Google" name="type" readonly/>
+        <input type="text" class="pw" id="type" value="Google" name="type" readonly/>
         </div>
 
       <button class="btn_inter" type="submit">
@@ -122,6 +122,8 @@ div.innerHTML = `
 
 `;
 document.getElementById('interform').appendChild(div);
+
+
 }
     </script>
 
@@ -136,9 +138,6 @@ document.getElementById('interform').appendChild(div);
     </div>
 
     <div class="middle">
-        <button type="button" class="btn" id="k" onclick="add_interform_k()">
-            카카오 연동
-          </button>
         <button type="button" class="btn" id="n" onclick="add_interform_n()">
             네이버 연동
           </button>
@@ -150,6 +149,7 @@ document.getElementById('interform').appendChild(div);
           </button>
 
     </div>
+    
     <div id="interform">
 
     </div>

@@ -12,6 +12,7 @@ from models import NContents
 from models import DContents
 from models import GContents
 from flask import session
+from nmail import nmail
 
 
 app = Flask(__name__)
@@ -38,12 +39,15 @@ def index():
                 ncontents = NContents.query.filter_by(userid=userid).first()
                 if ncontents is not None:
                     session['Nid'] = ncontents.Nid
+                    session['Npw'] = ncontents.Npw
                 dcontents = DContents.query.filter_by(userid=userid).first()
                 if dcontents is not None:
                     session['Did'] = dcontents.Did
+                    session['Dpw'] = dcontents.Dpw
                 gcontents = GContents.query.filter_by(userid=userid).first()
                 if gcontents is not None:
                     session['Gid'] = gcontents.Gid
+                    session['Gpw'] = ncontents.Gpw
                 return render_template('main.html', userid=session['userid'], Nid=session['Nid'], Did=session['Did'], Gid=session['Gid'])
             else:
                 a = "wrong"
@@ -56,13 +60,45 @@ def index():
 @app.route('/logout')
 def logout():
     session.pop('userid', None)
+    session.pop('Nid', None)
+    session.pop('Npw', None)
+    session.pop('Did', None)
+    session.pop('Dpw', None)
+    session.pop('Gid', None)
+    session.pop('Gpw', None)
     return redirect(url_for('index'))
 
 
 @app.route('/info', methods=['GET', 'POST'])
 def info():
-    if 'userid' in session:
-        return render_template('main.html', userid=session['userid'], Nid=session['Nid'], Did=session['Did'], Gid=session['Gid'])
+    if request.method == 'GET':
+        if 'userid' in session:
+
+            return render_template('main.html', userid=session['userid'], Nid=session['Nid'], Did=session['Did'], Gid=session['Gid'])
+        else:
+            return render_template('main.html')
+    else:
+        if request.method == 'POST':
+            ReplyConents = request.form.get('reply-contents')
+            ReplyName = request.form.get('reply-name')
+            ReplyEmail = request.form.get('reply-email')
+            mailtype = request.form.get('mailtype')
+            if mailtype == 'N':
+                mailID = session['Nid']
+                mailPW = session['Npw']
+                mailadress = mailID + '@naver.com'
+                nmail(mailID, mailPW, mailadress,
+                      ReplyName, ReplyConents, ReplyEmail)
+                return redirect(url_for('index'))
+
+            elif mailtype == 'D':
+                mailID = session['Did']
+                mailPW = session['Dpw']
+                return mailID + mailPW + ReplyConents
+            else:
+                mailID = session['Gid']
+                mailPW = session['Gpw']
+                return mailID + mailPW + ReplyConents
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -99,32 +135,74 @@ def Idinter():
             ncontents.Nid = usermailid
             session['Nid'] = usermailid
             ncontents.Npw = usermailpw
+            session['Npw'] = usermailpw
+            # Naver(usermailid, usermailpw)
             db.session.add(ncontents)
             db.session.commit()
-            return render_template('main.html', userid=session['userid'], Nid=session['Nid'], Did=session['Did'], Gid=session['Gid'])
+            return redirect(url_for('info'))
+            # return render_template('main.html', userid=session['userid'], Nid=session['Nid'], Did=session['Did'], Gid=session['Gid'])
         elif (usermailtype == 'Daum'):
             dcontents = DContents()
             dcontents.userid = session['userid']
             dcontents.Did = usermailid
             session['Did'] = usermailid
             dcontents.Dpw = usermailpw
+            session['Dpw'] = usermailpw
             db.session.add(dcontents)
             db.session.commit()
-            return render_template('main.html', userid=session['userid'], Nid=session['Nid'], Did=session['Did'], Gid=session['Gid'])
-        elif (usermailtype == 'Google'):
+            return redirect(url_for('info'))
+            # return render_template('main.html', userid=session['userid'], Nid=session['Nid'], Did=session['Did'], Gid=session['Gid'])
+        else:
             gcontents = GContents()
             gcontents.userid = session['userid']
             gcontents.Gid = usermailid
             session['Gid'] = usermailid
             gcontents.Gpw = usermailpw
+            session['Gpw'] = usermailpw
             db.session.add(gcontents)
             db.session.commit()
-            return render_template('main.html', userid=session['userid'], Gid=session['Gid'])
+            return redirect(url_for('info'))
+            # return render_template('main.html', userid=session['userid'], Nid=session['Nid'], Did=session['Did'], Gid=session['Gid'])
+
+
+@app.route('/IdDisinter', methods=['GET', 'POST'])
+def IdDisinter():
+    if request.method == 'GET':
+        return render_template('IdDisinter.html', userid=session['userid'])
+    else:
+        mailtype_un = request.form.get('mailtype_un')
+        if (mailtype_un == 'N'):
+            delmail = NContents.query.filter_by(
+                userid=session['userid']).first()
+            db.session.delete(delmail)
+            session.pop('Nid', None)
+            session.pop('Npw', None)
+            session['Nid'] = '미연동'
+            db.session.commit()
+            return redirect(url_for('info'))
+        elif (mailtype_un == 'D'):
+            delmail = DContents.query.filter_by(
+                userid=session['userid']).first()
+            db.session.delete(delmail)
+            session.pop('Did', None)
+            session.pop('Dpw', None)
+            session['Did'] = '미연동'
+            db.session.commit()
+            return redirect(url_for('info'))
+        elif (mailtype_un == 'G'):
+            delmail = GContents.query.filter_by(
+                userid=session['userid']).first()
+            db.session.delete(delmail)
+            session.pop('Gid', None)
+            session.pop('Gpw', None)
+            session['Gid'] = '미연동'
+            db.session.commit()
+            return redirect(url_for('info'))
 
 
 @app.route('/main')
 def main():
-    return render_template('main.html')
+    return render_template('Idinter.html', userid=session['userid'])
 
 
 if __name__ == "__main__":

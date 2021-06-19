@@ -72,6 +72,13 @@ body{
     height: 200px;
 }
 
+.bottom{
+  display: flex;
+  justify-content: center;
+
+  height: 200px;
+}
+
 .btn{
   
     border-color: transparent;

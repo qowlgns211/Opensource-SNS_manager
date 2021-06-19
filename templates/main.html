@@ -8,7 +8,48 @@
     <link href="{{ url_for('static', filename='CSS/main.css') }}" rel="stylesheet">
 
     <script> 
+function makeList() {
+    // Establish the array which acts as a data source for the list
+    let listData = [
+        'Blue',
+        'Red',
+        'White',
+        'Green',
+        'Black',
+        'Orange'
+    ],
+    // Make a container element for the list
+    listContainer = document.createElement('div'),
+    // Make the list
+    listElement = document.createElement('ul'),
+    // Set up a loop that goes through the items in listItems one at a time
+    numberOfListItems = listData.length,
+    listItem,
+    i;
 
+    // Add it to the page
+    document.getElementById('mail-list').appendChild(listContainer);
+    listContainer.appendChild(listElement);
+
+
+    for (i = 0; i < numberOfListItems; ++i) {
+        // create an item for each one
+        listItem = document.createElement('li');
+
+        // Add the item text
+        listItem.innerHTML = listData[i];
+
+        // Add listItem to the listElement
+        listElement.appendChild(listItem);
+    }
+}
+
+        function send_mail(){
+            if(confirm("메일을 보내시겠습니까?")){
+                document.mail-form.submit();
+            }
+            
+        }
     
 
         function del_div(){
@@ -49,25 +90,24 @@
             <div id="user-name">네이버 아이디: {{Nid}}</div>
         </div>
     <div class="manage-middle-bar">
-        <div class="mail-list">
-            <ul>
-                <li>test</li>
-                <li>test</li>
-                <li>test</li>
-                <li>test</li>
-                <li>test</li>
-                <li>test</li>
-                <li>test</li>
-                <li>test</li>
-            </ul>
+        <div class="mail-list" id="mail-list">
+
         </div>
         <div class="look-and-send-mail">
-            <div class="mail-contents" id="N-mail-contents"></div>
-            <textarea id="reply-contents" name="reply-contents"
-                 rows="5" cols="100">
-            </textarea>
-            <button class="manage-top-bar_btn" id="manage-top-bar_N">Send Mail</button>
             
+            <form class="re" method="POST"  name="mail-form">
+                <div class="reply-info">
+                    <input type="text" class="reply-form" name="reply-name" placeholder="제목" required/>
+
+                    <input type="email" class="reply-form" name="reply-email" placeholder="받는 이 이메일" required/>
+                </div>
+                <div id="textbox-id">
+                <textarea id="reply-contents" class="reply-form" name="reply-contents" rows="5" cols="100" placeholder="내용" required></textarea>
+                <font size="2em">네이버 메일 좌측 하단의 [환경설정] > [POP3/IMAP 설정] > [POP3/SMTP 설정] 탭에서 'POP3/SMTP 사용' 옵션 체크</font>
+                </div>
+                <input type="text" id="mailtype" name="mailtype" value="N" style="display:none" readonly></input>
+                <button class="manage-top-bar_btn" id="manage-top-bar_N" onclick="send_mail()">Send Mail</button>
+</form>
 
         </div>
     </div>
@@ -75,7 +115,9 @@
     
                 
                 `;
+                
                 document.getElementById('field').appendChild(div);
+                makeList();
               
                 
 
@@ -97,26 +139,25 @@
             <div id="user-name">다음 아이디: {{Did}}</div>
         </div>
     <div class="manage-middle-bar">
-        <div class="mail-list">
-            <ul>
-                <li>test</li>
-                <li>test</li>
-                <li>test</li>
-                <li>test</li>
-                <li>test</li>
-                <li>test</li>
-                <li>test</li>
-                <li>test</li>
-            </ul>
+        <div class="mail-list" id="mail-list">
+
         </div>
         <div class="look-and-send-mail">
-            <div class="mail-contents" id="D-mail-contents"></div>
-            <textarea id="reply-contents" name="reply-contents"
-                 rows="5" cols="100">
-            </textarea>
-            <button class="manage-top-bar_btn" id="manage-top-bar_D">Send Mail</button>
             
 
+            <form class="re" method="POST"  name="mail-form">
+                <div class="reply-info">
+                    <input type="text" class="reply-form" name="reply-name" placeholder="제목" required/>
+
+                    <input type="email" class="reply-form" name="reply-email" placeholder="보내는 이메일" required/>
+                </div>
+                <textarea id="reply-contents" class="reply-form" name="reply-contents"
+        rows="5" cols="100" placeholder="내용" required>
+
+    </textarea>
+                <input type="text" id="mailtype" name="mailtype" value="D" style="display:none" readonly></input>
+                <button class="manage-top-bar_btn" id="manage-top-bar_D" onclick="send_mail()">Send Mail</button>
+</form>
         </div>
     </div>
 </div>
@@ -125,6 +166,7 @@
                 
                 `;
                 document.getElementById('field').appendChild(div);
+                makeList();
 
                
                 
@@ -148,26 +190,24 @@
             <div id="user-name">구글 아이디: {{Gid}}</div>
         </div>
     <div class="manage-middle-bar">
-        <div class="mail-list">
-            <ul>
-                <li>test</li>
-                <li>test</li>
-                <li>test</li>
-                <li>test</li>
-                <li>test</li>
-                <li>test</li>
-                <li>test</li>
-                <li>test</li>
-            </ul>
+        <div class="mail-list" id="mail-list">
+
         </div>
         <div class="look-and-send-mail">
-            <div class="mail-contents" id="G-mail-contents"></div>
-            <textarea id="reply-contents" name="reply-contents"
-                 rows="5" cols="100">
-            </textarea>
-            <button class="manage-top-bar_btn" id="manage-top-bar_G">Send Mail</button>
             
+            <form class="re" method="POST"  name="mail-form">
+                <div class="reply-info">
+                    <input type="text" class="reply-form" name="reply-name" placeholder="제목" required/>
 
+                    <input type="email" class="reply-form" name="reply-email" placeholder="보내는 이메일" required/>
+                </div>
+                <textarea id="reply-contents" class="reply-form" name="reply-contents"
+        rows="5" cols="100" placeholder="내용" required>
+
+    </textarea>
+                <input type="text" id="mailtype" name="mailtype" value="G" style="display:none" readonly></input>
+                <button class="manage-top-bar_btn" id="manage-top-bar_G" onclick="send_mail()">Send Mail</button>
+</form>
         </div>
     </div>
 </div>
@@ -176,6 +216,7 @@
                 
                 `;
                 document.getElementById('field').appendChild(div);
+                makeList();
         }
 
 
@@ -188,6 +229,7 @@
     <div class="top-bar">
         <div id="top-bar_id">{{userid}}</div>
         <a href="{{ url_for('Idinter')}}" id="top-bar_id" >이메일-연동하기</a>
+        <a href="{{ url_for('IdDisinter')}}" id="top-bar_id" >이메일-연동해체</a>
         <a href="{{ url_for('logout')}}" id="top-bar_id" >로그아웃</a>
         
 
@@ -195,15 +237,7 @@
 
     <div class="middle">
         <div class="sns-tap">
-        <div class="sns" id="kakao">
-            <div class="btn-class">
-            <button type="button" class="btn" onclick="add_div_K()">
-                K
-              </button>
-                
 
-              </div>
-        </div>
         <div class="sns" id="naver">
             <div class="btn-class">
             <button type="button" class="btn" onclick="add_div_N()">

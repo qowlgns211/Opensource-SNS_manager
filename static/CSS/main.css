@@ -199,6 +199,7 @@ a#top-bar_id{
 .manage-middle-bar{
     height: 540px;
     display: flex;
+    flex-direction: column;
 }
 
 .mail-list{
@@ -277,4 +278,32 @@ li{
 
   #N-mail-contents{
     background-color:lightgreen;
+  }
+
+  .reply-form{
+      margin: 5px;
+      padding: 5px;
+      
+      box-shadow: none;
+
+  }
+
+  .re{
+      display: flex;
+      
+  }
+
+  .reply-info{
+      display: flex;
+      flex-direction: column;
+      
+  }
+
+  #textbox-id{
+      display: flex;
+      flex-direction: column;
+  }
+
+  #warning{
+      font-size: 2em;
   }
