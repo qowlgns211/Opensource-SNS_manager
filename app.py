@@ -1,22 +1,48 @@
 
 from logging import debug
+import logging
 import os
-from flask import Flask, render_template
-from flask import request
-from flask import redirect
+import pathlib
+import google.auth.transport.requests
+import requests
+
+from flask import Flask, render_template, abort, request, redirect, session
 from flask.helpers import url_for
 from sqlalchemy.sql.elements import Null
 from models import db
 from models import Fcuser
-from models import NContents
-from models import DContents
-from models import GContents
-from flask import session
+from models import NContents, DContents, GContents
 from nmail import nmail
+from google.oauth2 import id_token
+from google_auth_oauthlib.flow import Flow
+from pip._vendor import cachecontrol
+
 
 
 app = Flask(__name__)
 
+app.secret_key = "temp"
+
+
+os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
+
+GOOGLE_CLIENT_ID = "733571866823-0t5oif5cf5d5i2o849t0earv8cevmr49.apps.googleusercontent.com"
+client_secrets_file = os.path.join(pathlib.Path(__file__).parent, "client_secret.json")
+
+flow = Flow.from_client_secrets_file(
+    client_secrets_file=client_secrets_file,
+    scopes=["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email", "openid"],
+    redirect_uri="http://127.0.0.1:5000/callback"
+                             )
+
+def login_is_required(function):
+    def wrapper(*args, **kwargs):
+        if "google_id" not in session:
+            return abort(401) # Authorization required
+        else:
+            return function()
+
+    return wrapper
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -32,22 +58,28 @@ def index():
         fcuser = Fcuser.query.filter_by(userid=userid).first()
         if fcuser is not None:
             if fcuser.password == password:
+                logging.warning("Login successful")
                 session['userid'] = userid
                 session['Nid'] = '미연동'
                 session['Did'] = '미연동'
                 session['Gid'] = '미연동'
                 ncontents = NContents.query.filter_by(userid=userid).first()
                 if ncontents is not None:
+                    logging.warning(ncontents)
+                    logging.warning("Get Naver ID")
                     session['Nid'] = ncontents.Nid
                     session['Npw'] = ncontents.Npw
                 dcontents = DContents.query.filter_by(userid=userid).first()
-                if dcontents is not None:
+                if dcontents is not None:                    
+                    logging.warning(dcontents)
+                    logging.warning("get Daum ID")
                     session['Did'] = dcontents.Did
                     session['Dpw'] = dcontents.Dpw
                 gcontents = GContents.query.filter_by(userid=userid).first()
                 if gcontents is not None:
-                    session['Gid'] = gcontents.Gid
-                    session['Gpw'] = ncontents.Gpw
+                    logging.warning(gcontents.Gid)
+                    logging.warning("get Google ID")
+                    session['Gid'] = gcontents.Gid  
                 return render_template('main.html', userid=session['userid'], Nid=session['Nid'], Did=session['Did'], Gid=session['Gid'])
             else:
                 a = "wrong"
@@ -73,7 +105,6 @@ def logout():
 def info():
     if request.method == 'GET':
         if 'userid' in session:
-
             return render_template('main.html', userid=session['userid'], Nid=session['Nid'], Did=session['Did'], Gid=session['Gid'])
         else:
             return render_template('main.html')
@@ -153,6 +184,7 @@ def Idinter():
             return redirect(url_for('info'))
             # return render_template('main.html', userid=session['userid'], Nid=session['Nid'], Did=session['Did'], Gid=session['Gid'])
         else:
+            logging.warning("G Idinter")
             gcontents = GContents()
             gcontents.userid = session['userid']
             gcontents.Gid = usermailid
@@ -191,7 +223,7 @@ def IdDisinter():
             return redirect(url_for('info'))
         elif (mailtype_un == 'G'):
             delmail = GContents.query.filter_by(
-                userid=session['userid']).first()
+            userid=session['userid']).first()
             db.session.delete(delmail)
             session.pop('Gid', None)
             session.pop('Gpw', None)
@@ -199,6 +231,59 @@ def IdDisinter():
             db.session.commit()
             return redirect(url_for('info'))
 
+##################################Google Login START###############################################
+
+@app.route("/login")
+def login():
+    authorization_url, state = flow.authorization_url()
+    session["state"] = state
+    return redirect(authorization_url)
+
+@app.route("/callback")
+def callback():
+    flow.fetch_token(authorization_response=request.url)
+
+    if not session["state"] == request.args["state"]:
+        abort(500) # State does not match
+
+    credentials = flow.credentials
+    request_session = requests.session()
+    cached_session = cachecontrol.CacheControl(request_session)
+    token_request = google.auth.transport.requests.Request(session=cached_session)
+
+    id_info = id_token.verify_oauth2_token(
+        id_token=credentials._id_token,
+        request=token_request,
+        audience=GOOGLE_CLIENT_ID
+    )
+    
+    session["google_id"] = id_info.get("sub")
+    session["name"] = id_info.get("name")
+    session["email"] = id_info.get("email")
+    session["email_verified"] = id_info.get("email_verified")
+
+
+    logging.warning(session["google_id"])
+    logging.warning(session["name"])
+    logging.warning(session["email"])
+    logging.warning(session["email_verified"])
+
+    gcontents = GContents() 
+    gcontents.userid = session["email"]
+    gcontents.Gid = session["email"]
+    db.session.add(gcontents)
+    db.session.commit()
+    logging.warning("commit completed")
+    logging.warning(gcontents.Gid)
+
+    return redirect("/protected_area")
+
+@app.route("/protected_area")
+@login_is_required
+def protected_area():
+    return redirect("/")
+
+##################################Google Login END###########################################
 
 @app.route('/main')
 def main():
