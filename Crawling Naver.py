@@ -9,20 +9,15 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 from bs4 import BeautifulSoup
 
-def copy_paste(driver,element,text):
-    pyperclip.copy(text)
-    element.click()
-
-    action_chain = ActionChains(driver).key_down(Keys.CONTROL).send_keys('v').key_up(Keys.CONTROL)
-    action_chain.perform()
-    time.sleep(1)
-
 def Daum(id_inpuut,pwd_input):
-    dic[] = {'person' : '' , 'title' : '','address' : '' }
-    
+    # Dictionary 변수
+    # person : 보낸 사람 title : 제목 address : 메일 내용 주소
+    dic = {'person' : "ROOT" , 'title' : "관리자", 'address' : "root" }
+
+    # 로그인 하는 과정
+
     driver = webdriver.Chrome('C:\Chrome_WebDriver\chromedriver.exe')
     driver.get('https://logins.daum.net/accounts/signinform.do?url=https%3A%2F%2Fwww.daum.net%2F')
-
     sleep(0.5)
     driver.find_element_by_name('id').send_keys('id_input')
     sleep(0.5)
@@ -30,62 +25,47 @@ def Daum(id_inpuut,pwd_input):
     sleep(0.5)
 
     driver.find_element_by_xpath('//*[@id="loginBtn"]').click()
+    sleep(0.5)
 
-    driver.get(mail_url)
+    #메일 안의 내용 받아오기
 
-    link_list = driver.find_elements_by_css_selector('div#mailList a.link_subject')
-    for a in link_list:
-        link = a.get_attribute('href')
-        title = a.text.strip()
-        print(link,title,sep= " - ")
+    driver.get("https://mail.daum.net/")
+    sleep(0.5)
+
+    html = driver.page_source
+    soup = BeautifulSoup(html,'html.parser')
+
+    mailList = driver.find_elements_by_css_selector('a.link_from')
+
+    for link in mailList:
+        #dic['person'] = link.get('title')
+        #print(dic['person'])
+        #dic['title'] = link.text.strip()
+        #print(dic['title'])
+        #dic['address'] = link.get('href')
+        #print(dic['address'])
+
+        print(link.text)
     
 def Naver(id_input, pwd_input):
-    dic[] = {'person' : '' , 'title' : '','address' : '' }
-    
+    dic = {'person' : "Root" , 'title' : "관리자",'address' : "주소" }
+
     driver = webdriver.Chrome('C:\Chrome_WebDriver\chromedriver.exe')
-    #driver.get('https://nid.naver.com/nidlogin.login?mode=form&url=https%3A%2F%2Fwww.naver.com')
-    driver.get('https://nid.naver.com/nidlogin.login?mode=form&url=https%3A%2F%2Fwww.naver.com')
-    # sleep 을 받는 이유는 너무 빠르게 로그인을 해버리면 트래픽공격으로 오해를 받을 수 있다.
-
     sleep(0.5)
-    driver.find_element_by_name("id").send_keys('id_input')
-    sleep(0.5) 
-    driver.find_element_by_name('pw').send_keys('pwd_input')
+    driver.get('https://mail.naver.com')
+    driver.find_element_by_name('id').click()
+    pyperclip.copy('id_input')
+    driver.find_element_by_name('id').send_keys(Keys.CONTROL,'v')
     sleep(0.5)
-    #아이디와 비밀번호를 자동으로 타이핑하는 코드
-    copy_paste(driver,id_input,id)
-    copy_paste(drvier,pwd_input,pwd)
-    driver.find_element_by_xpath('//*[@id="log.login"]').click()
-    #자동으로 로그인 버튼을 눌러주는 코드
+    driver.find_element_by_name('pw').click()
+    pyperclip.copy('pwd_input')
+    driver.find_element_by_name('pw').send_keys(Keys.CONTROL,'v')
+    sleep(0.5)
+    driver.find_element_by_id('log.login').click()
 
-    #문제점 해결부분
-    if(driver.current_url == "https://www.naver.com/"):
-        driver.get("https://mail.naver.com/")
-        html = driver.page_source
-        soup = BeautifulSoup(html,'lxml')
-
-        title_list = soup.find_all('div','subject')
-        for word in title_list:
-            dic[title] = word
-
-
-def Crawl():
-    dic[] = {'person' : '' , 'title' : '','address' : '' }
-
-    driver.get("https://mail.naver.com/")
-    html = driver.page_source
-    soup = BeautifulSoup(html,'lxml')
-
-    title_list = soup.find_all('strong','mail.title')
-    send_people = soup.find_all('a','title')
-    mail_address = soup.find_all('a','href')
-    
-    
-    # 크롤링 정보 확인용 print
-    for title in title_list:
-        print(title.text)
-    
-    for people in send_people:
-        print(people.text)
+    maillist = driver.find_elements_by_css_selector('strong.mail_title')
+    for mail in maillist:
+        print(mail.text)
+        
 
 
