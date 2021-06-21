@@ -108,11 +108,11 @@ function makeList() {
         </div>
         <div class="look-and-send-mail">
             
-            <form class="re" method="POST"  name="mail-form">
+            <form class="re" method="POST" autocomplete='off' name="mail-form">
                 <div class="reply-info">
-                    <input type="text" class="reply-form" name="reply-name" placeholder="제목" required/>
+                    <input type="text" class="reply-form" id="reply-text" name="reply-name" placeholder="제목" required/>
 
-                    <input type="email" class="reply-form" name="reply-email" placeholder="받는 이 이메일" required/>
+                    <input type="email" class="reply-form" id="reply-email" name="reply-email" placeholder="받는 이 이메일" required/>
                 </div>
                 <div id="textbox-id">
                 <textarea id="reply-contents" class="reply-form" name="reply-contents" rows="5" cols="100" placeholder="내용" required></textarea>
@@ -158,14 +158,13 @@ function makeList() {
         <div class="look-and-send-mail">
             
 
-            <form class="re" method="POST"  name="mail-form">
+            <form class="re" method="POST" autocomplete='off' name="mail-form">
                 <div class="reply-info">
                     <input type="text" class="reply-form" name="reply-name" placeholder="제목" required/>
 
                     <input type="email" class="reply-form" name="reply-email" placeholder="보내는 이메일" required/>
                 </div>
-                <textarea id="reply-contents" class="reply-form" name="reply-contents"
-        rows="5" cols="100" placeholder="내용" required>
+                <textarea id="reply-contents" class="reply-form" name="reply-contents" rows="5" cols="100" placeholder="내용" required></textarea>
 
     </textarea>
                 <input type="text" id="mailtype" name="mailtype" value="D" style="display:none" readonly></input>
@@ -208,14 +207,13 @@ function makeList() {
         </div>
         <div class="look-and-send-mail">
             
-            <form class="re" method="POST"  name="mail-form">
+            <form class="re" method="POST" autocomplete='off' name="mail-form">
                 <div class="reply-info">
                     <input type="text" class="reply-form" name="reply-name" placeholder="제목" required/>
 
                     <input type="email" class="reply-form" name="reply-email" placeholder="보내는 이메일" required/>
                 </div>
-                <textarea id="reply-contents" class="reply-form" name="reply-contents"
-        rows="5" cols="100" placeholder="내용" required>
+                <textarea id="reply-contents" class="reply-form" name="reply-contents" rows="5" cols="100" placeholder="내용" required></textarea>
 
     </textarea>
                 <input type="text" id="mailtype" name="mailtype" value="G" style="display:none" readonly></input>
