@@ -206,8 +206,9 @@ a#top-bar_id{
     position: relative;
     left: 20px;
     top:10px;
-    width: 650px;
-    
+    width: 1200px;
+    height: 600px;
+    overflow:auto;
 
 }
 
@@ -304,6 +305,3 @@ li{
       flex-direction: column;
   }
 
-  #warning{
-      font-size: 2em;
-  }
