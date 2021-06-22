@@ -46,11 +46,11 @@ function add_interform_n(){
             var div = document.createElement("div");
 
 div.innerHTML = `
-<form method="POST" id="LoginForm" class="LoginForm" name="LoginForm" style="height: 530px;">
+<form method="POST" id="LoginForm"  autocomplete='off' class="LoginForm" name="LoginForm" style="height: 530px;">
       <h2>연동</h2>
      
       <div class="idForm">
-        <input type="text" autocomplete='off' class="id" id="userid" placeholder="ID" name="userid" required>
+        <input type="text" class="id" id="userid" placeholder="ID" name="userid" required>
       </div>
       <div class="passForm">
         <input type="password" class="pw" id="password" placeholder="PW" name="password" required>
@@ -74,11 +74,11 @@ function add_interform_d(){
             var div = document.createElement("div");
 
 div.innerHTML = `
-<form method="POST" id="LoginForm" class="LoginForm" name="LoginForm" style="height: 530px;">
+<form method="POST" id="LoginForm" class="LoginForm" autocomplete='off'  name="LoginForm" style="height: 530px;">
       <h2>연동</h2>
      
       <div class="idForm">
-        <input type="text" autocomplete='off' class="id" id="userid" placeholder="ID" name="userid" required>
+        <input type="text" class="id" id="userid" placeholder="ID" name="userid" required>
       </div>
       <div class="passForm">
         <input type="password" class="pw" id="password" placeholder="PW" name="password" required>
@@ -102,25 +102,15 @@ function add_interform_g(){
             var div = document.createElement("div");
 
 div.innerHTML = `
-<form method="POST" id="LoginForm" class="LoginForm" name="LoginForm" style="height: 530px;">
-      <h2>연동</h2>
-     
-      <div class="idForm">
-        <input type="text" autocomplete='off' class="id" id="userid" placeholder="ID" name="userid" required>
-      </div>
-      <div class="passForm">
-        <input type="password" class="pw" id="password" placeholder="앱 비밀번호 16자리" name="password" required>
-      <div class="passForm">
-        <input type="text" class="pw" id="type" value="Google" name="type" readonly/>
-        <p id="textbox-id">앱 비밀번호로 연동해야 메일보내기가 작동됩니다. <p>
-        <a href="https://support.google.com/mail/answer/185833?hl=ko" target="_blank">앱 비밀번호 로그인 안내<a>
-        </div>
 
-      <button class="btn_inter" type="submit">
-        연동하기
+      <div class="google_loginform">
+
+      <a href='/login'>
+      <button class="btn_inter">
+        Login to Google
       </button>
-
-
+      </a>
+      </div>
 
 `;
 document.getElementById('interform').appendChild(div);

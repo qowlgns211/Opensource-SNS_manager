@@ -171,5 +171,9 @@ body{
     display:inline;
   }
 
-
+  .google_loginform{
+    position : relative;
+    left : 50%;
+    text-align: center;
+  }
  
