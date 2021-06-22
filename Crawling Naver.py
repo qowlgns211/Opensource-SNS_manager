@@ -13,7 +13,7 @@ def Daum(id_inpuut,pwd_input):
     # Dictionary 변수
     # person : 보낸 사람 title : 제목 address : 메일 내용 주소
 
-    dic = {'person' : "ROOT" , 'title' : "관리자", 'address' : "root" }
+    D_dic = {'person' : "ROOT" , 'title' : "관리자", 'address' : "root" }
 
     # 로그인 하는 과정
 
@@ -21,9 +21,9 @@ def Daum(id_inpuut,pwd_input):
     driver.get('https://mail.daum.net/')
     driver.find_element_by_xpath('//*[@id="daumHead"]/div/div/a[4]/span').click()
     driver.find_element_by_xpath('//*[@id="mArticle"]/div[1]/div/div/div[2]/a[2]').click()
-    driver.find_element_by_name('id').send_keys('spross9970')
+    driver.find_element_by_name('id').send_keys(id_input)
     sleep(0.5)
-    driver.find_element_by_name('pw').send_keys('pass9970')
+    driver.find_element_by_name('pw').send_keys(pwd_input)
     sleep(0.5)
 
     driver.find_element_by_xpath('//*[@id="loginBtn"]').click()
@@ -43,15 +43,15 @@ def Daum(id_inpuut,pwd_input):
         person = mail.select_one('div> input')['title']
         address = mail.select_one('div > a')['href']
         title = mail.select_one('div > a >strong')
-        dic['title'] += title.text
-        dic['person'] += person.text
-        dic['address']+= address.text
+        D_dic['title'] += title.text
+        D_dic['person'] += person.text
+        D_dic['address']+= address.text
         print(person.text)
         print(address.text)
         print(title.text)
         
 def Naver(id_input, pwd_input):
-    dic = {'person' : "Root" , 'title' : "관리자",'address' : "root" }
+    N_dic = {'person' : "Root" , 'title' : "관리자",'address' : "root" }
 
     #드라이버 실행시키기
     driver = webdriver.Chrome('C:\Chrome_WebDriver\chromedriver.exe')
@@ -60,11 +60,11 @@ def Naver(id_input, pwd_input):
 
     # 아이디 패스워드 자동 입력화 부분
     driver.find_element_by_name('id').click()
-    pyperclip.copy('dkstjsdn1224')
+    pyperclip.copy(id_input)
     driver.find_element_by_name('id').send_keys(Keys.CONTROL,'v')
     sleep(0.5)
     driver.find_element_by_name('pw').click()
-    pyperclip.copy('fellin1919')
+    pyperclip.copy(pwd_input)
     driver.find_element_by_name('pw').send_keys(Keys.CONTROL,'v')
     sleep(0.5)
 
@@ -83,12 +83,12 @@ def Naver(id_input, pwd_input):
     for mail in mails:
         person = mail.select_one('div > div > a')['title']
         address = mail.select_one('div > div.subject > a')['href']
-        dic['person'] += person.text
-        dic['address']+= "https://mail.naver.com/" + address.text
+        N_dic['person'] += person.text
+        N_dic['address']+= "https://mail.naver.com/" + address.text
 
     # 메일 제목 title 딕셔너리에 포함.
     maillist = soup.find_all('strong','mail_title')
 
     for b in maillist:
-        dic['title']+= b.text
+        N_dic['title']+= b.text
         
