@@ -16,38 +16,40 @@ def Daum(id_input,pwd_input):
     D_title = []
     D_address = []
 
-
     # 로그인 하는 과정
+
     driver = webdriver.Chrome('C:\Chrome_WebDriver\chromedriver.exe')
     driver.get('https://mail.daum.net/')
     driver.find_element_by_xpath('//*[@id="daumHead"]/div/div/a[4]/span').click()
     driver.find_element_by_xpath('//*[@id="mArticle"]/div[1]/div/div/div[2]/a[2]').click()
-    driver.find_element_by_name('id').send_keys(id_input)
+    driver.find_element_by_name('id').send_keys('spross9970')
     sleep(0.5)
-    driver.find_element_by_name('pw').send_keys(pwd_input)
+    driver.find_element_by_name('pw').send_keys('pass9970')
     sleep(0.5)
-
-    #자동 로그인 버튼 클
     driver.find_element_by_xpath('//*[@id="loginBtn"]').click()
     sleep(0.5)
 
     #메일 안의 내용 받아오기
-    driver.get("https://mail.daum.net/")
+
+    driver.get('https://mail.daum.net/')
+    print(driver.page_source)
+
     html = driver.page_source
     soup = BeautifulSoup(html,'lxml')
 
-    maillist = soup.select('#mailList > div.scroll > div > ul > li')
+    mails = soup.select('#mailList > div.scroll > div > ul > li')
 
-    for mail in maillist:
-        person = mail.select_one('div> input')['title']
-        title = mail.select_one('div > a >strong')
-        address = mail.select_one('div > a')['href']
-        D_person.append(person)
-        D_title.append(title)
-        D_address.append('https://mail.daum.net/' + address)
+    for mail in mails:
+        Person = mail.select_one('div.info_from > a')['title']
+        Title = mail.select_one('div > a > strong').text
+        Address = mail.select_one('div.info_subject > a')['href']
+        D_person.append(Person)
+        D_title.append(Title)
+        D_address.append('https://mail.daum.net/' + Address)
 
-    #드라이버 종
+    # 드라이버 종료
     driver.quit()
+
     
 def Naver(id_input, pwd_input):
     #전체 리스트 변수
