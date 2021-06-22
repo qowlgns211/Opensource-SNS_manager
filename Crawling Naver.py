@@ -9,14 +9,15 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 from bs4 import BeautifulSoup
 
-def Daum(id_inpuut,pwd_input):
-    # Dictionary 변수
-    # person : 보낸 사람 title : 제목 address : 메일 내용 주소
+def Daum(id_input,pwd_input):
 
-    D_dic = {'person' : "ROOT" , 'title' : "관리자", 'address' : "root" }
+    #각각의 정보 리스트
+    D_person = []
+    D_title = []
+    D_address = []
+
 
     # 로그인 하는 과정
-
     driver = webdriver.Chrome('C:\Chrome_WebDriver\chromedriver.exe')
     driver.get('https://mail.daum.net/')
     driver.find_element_by_xpath('//*[@id="daumHead"]/div/div/a[4]/span').click()
@@ -26,37 +27,51 @@ def Daum(id_inpuut,pwd_input):
     driver.find_element_by_name('pw').send_keys(pwd_input)
     sleep(0.5)
 
+    #자동 로그인 버튼 클
     driver.find_element_by_xpath('//*[@id="loginBtn"]').click()
     sleep(0.5)
 
     #메일 안의 내용 받아오기
-
     driver.get("https://mail.daum.net/")
-
     html = driver.page_source
     soup = BeautifulSoup(html,'lxml')
 
     maillist = soup.select('#mailList > div.scroll > div > ul > li')
-    print(maillist)
 
     for mail in maillist:
         person = mail.select_one('div> input')['title']
-        address = mail.select_one('div > a')['href']
         title = mail.select_one('div > a >strong')
-        D_dic['title'] += title.text
-        D_dic['person'] += person.text
-        D_dic['address']+= address.text
-        print(person.text)
-        print(address.text)
-        print(title.text)
-        
+        address = mail.select_one('div > a')['href']
+        D_person.append(person)
+        D_title.append(title)
+        D_address.append('https://mail.daum.net/' + address)
+
+    #드라이버 종
+    driver.quit()
+    
 def Naver(id_input, pwd_input):
-    N_dic = {'person' : "Root" , 'title' : "관리자",'address' : "root" }
+    #전체 리스트 변수
+    N_person= []
+    N_address = []
+    N_title = []
+
+
+    #옵션 생성
+    #options = webdriver.ChromeOptions()
+
+    #창 숨기는 옵션 추가
+    #options.add_argument("headless")
+    #options.add_argument('window-size=1920x1080')
+    #options.add_argument('disable-gpu')
+    #options.add_argument("lang=ko_KR")
 
     #드라이버 실행시키기
-    driver = webdriver.Chrome('C:\Chrome_WebDriver\chromedriver.exe')
+    driver = webdriver.Chrome('C:\Chrome_WebDriver\chromedriver.exe',options = options)
     sleep(0.5)
+
     driver.get('https://mail.naver.com')
+    id_input = 'dkstjsdn1224'
+    pwd_input = 'fellin1919'
 
     # 아이디 패스워드 자동 입력화 부분
     driver.find_element_by_name('id').click()
@@ -73,22 +88,24 @@ def Naver(id_input, pwd_input):
 
     #Web 브라우저 받아오기.
     driver.get("https://mail.naver.com/")
-
     html = driver.page_source
     soup = BeautifulSoup(html,'lxml')
-    
-    # 보낸 사람 person, 내용 주솟값 address 딕셔너리에 포함.
+
+    # 보낸 사람 person, 내용 주솟값 각각의 리스트에 포함.
     mails = soup.select('#list_for_view > ol > li')
-    
+
     for mail in mails:
-        person = mail.select_one('div > div > a')['title']
-        address = mail.select_one('div > div.subject > a')['href']
-        N_dic['person'] += person.text
-        N_dic['address']+= "https://mail.naver.com/" + address.text
+        Person = mail.select_one('div > div > a')['title']
+        Address = mail.select_one('div > div.subject > a')['href']
+        N_person.append(Person)
+        N_address.append("https://mail.naver.com/" + Address)
 
     # 메일 제목 title 딕셔너리에 포함.
     maillist = soup.find_all('strong','mail_title')
 
     for b in maillist:
-        N_dic['title']+= b.text
-        
+        N_title.append(b.text)
+
+    # 드라이버 종료
+    driver.quit()
+
