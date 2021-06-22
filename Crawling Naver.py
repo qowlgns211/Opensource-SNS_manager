@@ -22,9 +22,9 @@ def Daum(id_input,pwd_input):
     driver.get('https://mail.daum.net/')
     driver.find_element_by_xpath('//*[@id="daumHead"]/div/div/a[4]/span').click()
     driver.find_element_by_xpath('//*[@id="mArticle"]/div[1]/div/div/div[2]/a[2]').click()
-    driver.find_element_by_name('id').send_keys('spross9970')
+    driver.find_element_by_name('id').send_keys(id_input)
     sleep(0.5)
-    driver.find_element_by_name('pw').send_keys('pass9970')
+    driver.find_element_by_name('pw').send_keys(pwd_input)
     sleep(0.5)
     driver.find_element_by_xpath('//*[@id="loginBtn"]').click()
     sleep(0.5)
@@ -72,8 +72,6 @@ def Naver(id_input, pwd_input):
     sleep(0.5)
 
     driver.get('https://mail.naver.com')
-    id_input = 'dkstjsdn1224'
-    pwd_input = 'fellin1919'
 
     # 아이디 패스워드 자동 입력화 부분
     driver.find_element_by_name('id').click()
