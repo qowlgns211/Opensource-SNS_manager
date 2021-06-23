@@ -6,50 +6,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SNS-manager</title>
     <link href="{{ url_for('static', filename='CSS/main.css') }}" rel="stylesheet">
+    <script src="https://d3js.org/d3.v5.js"></script>
+    
+
+
 
     <script> 
-// function makeListG() {
-//     // Establish the array which acts as a data source for the list
-//     let listData = [
-//     'Blue',
-//         'Red',
-//         'White',
-//         'Green',
-//         'Black',
-//         'Orange',
- 
 
-//     ],
-//     // Make a container element for the list
-//     listContainer = document.createElement('div'),
-//     // Make the list
-//     listElement = document.createElement('ul'),
-//     // Set up a loop that goes through the items in listItems one at a time
-//     numberOfListItems = listData.length,
-//     listItem,
-//     i;
+function makeListN() {
+    // Establish the array which acts as a data source for the list
+    var listData = JSON.parse("{{N_person}}");
+    // Make a container element for the list
+    listContainer = document.createElement('div'),
+    // Make the list
+    listElement = document.createElement('ul'),
+    // Set up a loop that goes through the items in listItems one at a time
+    numberOfListItems = listData.length,
+    listItem,
+    i;
 
-//     let Gdic={test : 'test', test2 : 42};
+    // Add it to the page
+    document.getElementById('mail-list').appendChild(listContainer);
+    listContainer.appendChild(listElement);
 
+    for (i = 0; i < numberOfListItems; ++i) {
+        // create an item for each one
+        listItem = document.createElement('li');
 
+        // Add the item text
+        listItem.innerHTML = listData[i];
 
+        // Add listItem to the listElement
+        listElement.appendChild(listItem);
+    }
+}
 
-//     // Add it to the page
-//     document.getElementById('mail-list').appendChild(listContainer);
-//     listContainer.appendChild(listElement);
-
-
-//     for (i = 0; i < numberOfListItems; ++i) {
-//         // create an item for each one
-//         listItem = document.createElement('li');
-
-//         // Add the item text
-//         listItem.innerHTML = listData[i];
-
-//         // Add listItem to the listElement
-//         listElement.appendChild(listItem);
-//     }
-// }
 
 
         function send_mail(){
@@ -99,6 +90,11 @@
         </div>
     <div class="manage-middle-bar">
         <div class="mail-list" id="mail-list">
+            {% for item in N_person %}
+                <tr>
+                    <td>{{item}}</td>
+                </tr>
+            {% endfor %}
 
 
         </div>
@@ -126,7 +122,7 @@
                 `;
                 
                 document.getElementById('field').appendChild(div);
-                makeList();
+                makeListN();
               
                 
 
@@ -201,7 +197,13 @@
         </div>
     <div class="manage-middle-bar">
         <div class="mail-list" id="mail-list">
-
+            <table border="1" height = 100% width= 95%>
+                {% for key,value in Gdic.items() %}
+                <tr>
+                    <td> {{ value }} </>
+                </tr>
+                {% endfor %}
+            </table>
 
         </div>
         <div class="look-and-send-mail">
@@ -229,13 +231,12 @@
                 
                 `;
                 document.getElementById('field').appendChild(div);
-                makeListG();
+                
         }
 
 
     
     </script>
-
 
 </head>
 <body>

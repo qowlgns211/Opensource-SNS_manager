@@ -11,7 +11,11 @@ CLIENT_FILE = 'credentials.json'
 API_NAME = 'gmail'
 API_VERSION = 'V1'
 SCOPES = ['https://mail.google.com/']
-Gdic = {'person': "ROOT", 'title': "관리자"}
+Gdic = {'sender': 'title'}
+
+from_name = ""
+subject = ""
+count = 0
 
 
 def quick():
@@ -48,8 +52,6 @@ def quick():
         userId='me', labelIds=['INBOX']).execute()
     messages = results.get('messages', [])
 
-    print(results)
-
     if not messages:
         print("No messages found.")
     else:
@@ -57,19 +59,30 @@ def quick():
         for message in messages:
             msg = service.users().messages().get(
                 userId='me', id=message['id']).execute()
-            print(msg['snippet'])
-            Gdic['title'] += msg['snippet']
+          #  print(msg['snippet'])
+          #  dic['title'] += msg['snippet']
             email_data = msg['payload']['headers']
             for values in email_data:
-                name = values["name"]
-                if name == "From":
-                    from_name = values["value"]
-                    Gdic['person'] += from_name
-                    print(from_name)
+                global count
+                count += 1
+                name = values["name"]  # 지메일의 속성들 나열
+                if (name == "From") or (name == "Subject"):
+                    if (name == "From"):
+                        global from_name
+                        from_name = values["value"]
+                        print(from_name)
+                    if (name == "Subject"):
+                        global subject
+                        subject = values["value"]
+                        print(subject)
+                    if (from_name != ""):
+                        if (subject != ""):
+                            Gdic.setdefault(count, from_name + " : " + subject)
+                            from_name = ""
+                            subject = ""
            # print (msg['snippet'])
             print("############################\n")
     return Gdic
-
    # os.remove("token.json")
 
 

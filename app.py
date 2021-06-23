@@ -5,7 +5,7 @@ import os
 import pathlib
 import google.auth.transport.requests
 import requests
-
+import pyperclip
 from flask import Flask, render_template, abort, request, redirect, session
 from flask.helpers import url_for
 from sqlalchemy.sql.elements import Null
@@ -18,12 +18,127 @@ from google.oauth2 import id_token
 from google_auth_oauthlib.flow import Flow, InstalledAppFlow
 from pip._vendor import cachecontrol
 from mail import googlemail
-from Crawling_Naver import Naver, Daum
 from daummail import mail
+from flask import json
+
+from time import sleep
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.action_chains import ActionChains
+from bs4 import BeautifulSoup
+
+N_person = []
+N_address = []
+N_title = []
+
+D_person = []
+D_title = []
+D_address = []
 
 
-Gdic = {'person': "ROOT", 'title': "관리자"}
-Ndic = {'person': 'root', 'title': '제목'}
+Gdic = {}
+
+
+def Daum(id_input, pwd_input):
+
+    # 각각의 정보 리스트
+
+    # 로그인 하는 과정
+
+    driver = webdriver.Chrome('./chromedriver.exe')
+    driver.get('https://mail.daum.net/')
+    driver.find_element_by_xpath(
+        '//*[@id="daumHead"]/div/div/a[4]/span').click()
+    driver.find_element_by_xpath(
+        '//*[@id="mArticle"]/div[1]/div/div/div[2]/a[2]').click()
+    driver.find_element_by_name('id').send_keys(id_input)
+    sleep(0.5)
+    driver.find_element_by_name('pw').send_keys(pwd_input)
+    sleep(0.5)
+    driver.find_element_by_xpath('//*[@id="loginBtn"]').click()
+    sleep(0.5)
+
+    # 메일 안의 내용 받아오기
+
+    driver.get('https://mail.daum.net/')
+    print(driver.page_source)
+
+    html = driver.page_source
+    soup = BeautifulSoup(html, 'lxml')
+
+    mails = soup.select('#mailList > div.scroll > div > ul > li')
+
+    for mail in mails:
+        Person = mail.select_one('div.info_from > a')['title']
+        Title = mail.select_one('div > a > strong').text
+        Address = mail.select_one('div.info_subject > a')['href']
+        D_person.append(Person)
+        D_title.append(Title)
+        D_address.append('https://mail.daum.net/' + Address)
+
+    # 드라이버 종료
+    driver.quit()
+
+
+def Naver(id_input, pwd_input):
+    # 전체 리스트 변수
+
+    # 옵션 생성
+    options = webdriver.ChromeOptions()
+
+    options.add_argument("headless")
+    options.add_argument('window-size=1920x1080')
+    options.add_argument('disable-gpu')
+    options.add_argument("lang=ko_KR")
+
+    # 드라이버 실행시키기
+    driver = webdriver.Chrome(
+        './chromedriver.exe', options=options)
+    sleep(0.5)
+
+    driver.get('https://mail.naver.com')
+
+    # 아이디 패스워드 자동 입력화 부분
+    driver.find_element_by_name('id').click()
+    pyperclip.copy(id_input)
+    driver.find_element_by_name('id').send_keys(Keys.CONTROL, 'v')
+    sleep(0.5)
+    driver.find_element_by_name('pw').click()
+    pyperclip.copy(pwd_input)
+    driver.find_element_by_name('pw').send_keys(Keys.CONTROL, 'v')
+    sleep(0.5)
+
+    # 로그인 버튼 클릭 자동화
+    driver.find_element_by_id('log.login').click()
+
+    # Web 브라우저 받아오기.
+    driver.get("https://mail.naver.com/")
+    html = driver.page_source
+    soup = BeautifulSoup(html, 'lxml')
+
+    # 보낸 사람 person, 내용 주솟값 각각의 리스트에 포함.
+    mails = soup.select('#list_for_view > ol > li')
+
+    for mail in mails:
+        Person = mail.select_one('div > div > a')['title']
+        Address = mail.select_one('div > div.subject > a')['href']
+        global N_person
+        global N_address
+
+        print(Person)
+        print(Address)
+        N_person.append(Person)
+        N_address.append("https://mail.naver.com/" + Address)
+
+    # 메일 제목 title 딕셔너리에 포함.
+    maillist = soup.find_all('strong', 'mail_title')
+
+    for b in maillist:
+        global N_title
+        N_title.append(b.text)
+
+    # 드라이버 종료
+    driver.quit()
 
 
 app = Flask(__name__)
@@ -94,7 +209,7 @@ def index():
                     logging.warning(gcontents.Gid)
                     logging.warning("get Google ID")
                     session['Gid'] = gcontents.Gid
-                return redirect("/")
+                return redirect("/info", Ndic=Ndic)
             else:
                 a = "wrong"
                 return render_template('index.html', answer=a)
@@ -129,9 +244,9 @@ def info():
                 logging.warning(gcontents.Gid)
                 logging.warning("get Google ID")
                 session['Gid'] = gcontents.Gid
-            return render_template('main.html', userid=session['userid'], Nid=session['Nid'], Did=session['Did'], Gid=session['Gid'], Gdic=Gdic, Ndic=Ndic)
+            return render_template('main.html', userid=session['userid'], Nid=session['Nid'], Did=session['Did'], N_person=N_person, N_address=N_address, N_title=N_title, Gid=session['Gid'], Gdic=Gdic)
         else:
-            return render_template('main.html',  userid=session['userid'], Nid=session['Nid'], Did=session['Did'], Ndic=Ndic)
+            return render_template('main.html',  userid=session['userid'], Nid=session['Nid'], Did=session['Did'], N_person=N_person, N_address=N_address, N_title=N_title, Ddic=Ddic)
     else:
         if request.method == 'POST':
             mailtype = request.form.get('mailtype')
@@ -199,7 +314,8 @@ def Idinter():
         usermailpw = request.form.get('password')
         usermailtype = request.form.get('type')
         if (usermailtype == 'Naver'):
-            Ndic = Naver(usermailid, usermailpw)
+
+            Naver(usermailid, usermailpw)
             ncontents = NContents()
             ncontents.userid = session['userid']
             ncontents.Nid = usermailid
@@ -213,7 +329,7 @@ def Idinter():
             return redirect(url_for('info'))
             # return render_template('main.html', userid=session['userid'], Nid=session['Nid'], Did=session['Did'], Gid=session['Gid'])
         elif (usermailtype == 'Daum'):
-            Ddic = Daum(usermailid, usermailpw)
+            Daum(usermailid, usermailpw)
             dcontents = DContents()
             dcontents.userid = session['userid']
             dcontents.Did = usermailid
@@ -331,6 +447,7 @@ def protected_area():
 
 @app.route("/quickstart")
 def quickstart():
+    global Gdic
     Gdic = quick()
     return redirect("/")
 

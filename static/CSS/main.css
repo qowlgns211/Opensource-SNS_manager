@@ -207,7 +207,7 @@ a#top-bar_id{
     position: relative;
     left: 20px;
     top:10px;
-    width: 650px;
+    width: 100%;
     overflow:auto;
 
 
