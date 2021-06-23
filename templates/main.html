@@ -83,18 +83,21 @@ function makeListN() {
         <div class="manage-top-bar">
             <button class="manage-top-bar_btn" id="manage-top-bar_N" onclick='del_div()'>X</button>
             
-            <button class="manage-top-bar_btn" id="manage-top-bar_N" onclick = "window.open('https://www.google.com/intl/ko/gmail/about/')">Naver Link</button>
+            <button class="manage-top-bar_btn" id="manage-top-bar_N" onclick = "window.open('https://mail.naver.com/')">Naver Link</button>
             <div id="user-name">사용자: {{userid}}</div>
             <div id="user-name">네이버 아이디: {{Nid}}</div>
         </div>
     <div class="manage-middle-bar">
         <div class="mail-list" id="mail-list">
             {% for item in N_person %}
+                {% for item_title in N_title %}
                 <tr>
                     <td>{{item}}</td>
+                    <td>{{item_title}}</td>
                 </tr>
                 <p></p>
-            {% endfor %}
+                {% endfor %}
+            {% endfor %}    
         </div>
         <div class="look-and-send-mail">
             
@@ -134,7 +137,7 @@ function makeListN() {
         <div class="manage-top-bar">
             <button class="manage-top-bar_btn" id="manage-top-bar_D" onclick='del_div()'>X</button>
             
-            <button class="manage-top-bar_btn" id="manage-top-bar_D" onclick = "window.open('https://www.google.com/intl/ko/gmail/about/')">Daum Link</button>
+            <button class="manage-top-bar_btn" id="manage-top-bar_D" onclick = "window.open('https://mail.daum.net/login?url=https%3A%2F%2Fmail.daum.net%2F')">Daum Link</button>
             <div id="user-name">사용자: {{userid}}</div>
             <div id="user-name">다음 아이디: {{Did}}</div>
         </div>
