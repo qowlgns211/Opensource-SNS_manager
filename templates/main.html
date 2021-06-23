@@ -79,7 +79,6 @@ function makeListN() {
                 var div = document.createElement("div");
 
                 div.innerHTML = `
-
     <div id="divN">
         <div class="manage-top-bar">
             <button class="manage-top-bar_btn" id="manage-top-bar_N" onclick='del_div()'>X</button>
@@ -94,16 +93,14 @@ function makeListN() {
                 <tr>
                     <td>{{item}}</td>
                 </tr>
+                <p></p>
             {% endfor %}
-
-
         </div>
         <div class="look-and-send-mail">
             
             <form class="re" method="POST" autocomplete='off'  name="mail-form">
                 <div class="reply-info">
                     <input type="text" class="reply-form" name="reply-name" placeholder="제목" required/>
-
                     <input type="email" class="reply-form" name="reply-email" placeholder="받는 이 이메일" required/>
                 </div>
                 <div id="textbox-id">
@@ -113,7 +110,6 @@ function makeListN() {
                 <input type="text" id="mailtype" name="mailtype" value="N" style="display:none" readonly></input>
                 <button class="manage-top-bar_btn" id="manage-top-bar_N" onclick="send_mail()">Send Mail</button>
 </form>
-
         </div>
     </div>
 </div>
@@ -134,7 +130,6 @@ function makeListN() {
                 var div = document.createElement("div");
 
                 div.innerHTML = `
-
     <div id="divD">
         <div class="manage-top-bar">
             <button class="manage-top-bar_btn" id="manage-top-bar_D" onclick='del_div()'>X</button>
@@ -145,20 +140,22 @@ function makeListN() {
         </div>
     <div class="manage-middle-bar">
         <div class="mail-list" id="mail-list">
-
+            {% for item in D_person %}
+                <tr>
+                    <td>{{item}}</td>
+                </tr>
+                <p></p>
+            {% endfor %}
         </div>
         <div class="look-and-send-mail">
             
-
             <form class="re" method="POST"  name="mail-form">
                 <div class="reply-info">
                     <input type="text" class="reply-form" name="reply-name" placeholder="제목" required/>
-
                     <input type="email" class="reply-form" name="reply-email" placeholder="보내는 이메일" required/>
                 </div>
                 <textarea id="reply-contents" class="reply-form" name="reply-contents"
         rows="5" cols="100" placeholder="내용" required>
-
     </textarea>
                 <input type="text" id="mailtype" name="mailtype" value="D" style="display:none" readonly></input>
                 <button class="manage-top-bar_btn" id="manage-top-bar_D" onclick="send_mail()">Send Mail</button>
@@ -167,7 +164,6 @@ function makeListN() {
     </div>
 </div>
     
-
                 
                 `;
                 document.getElementById('field').appendChild(div);
@@ -204,14 +200,12 @@ function makeListN() {
                 </tr>
                 {% endfor %}
             </table>
-
         </div>
         <div class="look-and-send-mail">
             
             <form class="re" method="POST"  name="mail-form">
                 <div class="reply-info">
                     <input type="text" class="reply-form" autocomplete='off' name="reply-name" placeholder="제목" required/>
-
                     <input type="email" class="reply-form" autocomplete='off' name="reply-email" placeholder="보내는 이메일" required/>
                     <input type="text" class="reply-form" name="reply-Gpw" placeholder="구글 앱 비밀번호" required/>
                 </div>
@@ -222,12 +216,10 @@ function makeListN() {
                 <input type="text" id="mailtype" name="mailtype" value="G" style="display:none" readonly></input>
                 <button class="manage-top-bar_btn" id="manage-top-bar_G" onclick="send_mail()">Send Mail</button>
 </form>
-
         </div>
     </div>
 </div>
     
-
                 
                 `;
                 document.getElementById('field').appendChild(div);
