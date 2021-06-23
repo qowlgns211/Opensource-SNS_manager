@@ -1,4 +1,3 @@
-
 from logging import debug
 import logging
 import os
@@ -61,6 +60,7 @@ def Daum(id_input, pwd_input):
     # 메일 안의 내용 받아오기
 
     driver.get('https://mail.daum.net/')
+
     print(driver.page_source)
 
     html = driver.page_source
@@ -93,8 +93,9 @@ def Naver(id_input, pwd_input):
 
     # 드라이버 실행시키기
     driver = webdriver.Chrome(
-        './chromedriver.exe', options=options)
-    sleep(0.5)
+        './chromedriver.exe') 
+    #     options=options)
+    # sleep(0.5)
 
     driver.get('https://mail.naver.com')
 
@@ -110,6 +111,7 @@ def Naver(id_input, pwd_input):
 
     # 로그인 버튼 클릭 자동화
     driver.find_element_by_id('log.login').click()
+    
 
     # Web 브라우저 받아오기.
     driver.get("https://mail.naver.com/")
@@ -118,13 +120,16 @@ def Naver(id_input, pwd_input):
 
     # 보낸 사람 person, 내용 주솟값 각각의 리스트에 포함.
     mails = soup.select('#list_for_view > ol > li')
-
+    logging.warning("Naver clear1")
     for mail in mails:
+        logging.warning("Naver clear2")
         Person = mail.select_one('div > div > a')['title']
         Address = mail.select_one('div > div.subject > a')['href']
         global N_person
         global N_address
-
+        logging.warning("Naver clear3")
+        logging.warning(Person)        
+        logging.warning(Address)
         print(Person)
         print(Address)
         N_person.append(Person)
@@ -132,7 +137,7 @@ def Naver(id_input, pwd_input):
 
     # 메일 제목 title 딕셔너리에 포함.
     maillist = soup.find_all('strong', 'mail_title')
-
+    
     for b in maillist:
         global N_title
         N_title.append(b.text)
